@@ -9,6 +9,7 @@ void mergeRanges(int values[], int startIndex, int midPoint,
     int firstIndex = startIndex;
     int secondIndex = midPoint;
     int copyIndex = 0;
+    printf("Variables in mergeRanges:\n rangeSize %d\n firstIndex %d\n secondIndex %d\n endIndex %d\n", rangeSize, firstIndex, secondIndex, endIndex);
     while (firstIndex < midPoint && secondIndex <= endIndex) {
       if (values[firstIndex] < values[secondIndex]) {
         destination[copyIndex] = values[firstIndex];
@@ -58,7 +59,7 @@ void mergesortRange(int values[], int startIndex, int endIndex) {
 
     printf("Elements of given array(Second Half): \n");
     //Loop through the array by incrementing value of i
-    for (int i = startIndex; i <= midPoint; i++) {
+    for (int i = midPoint+1; i <= endIndex; i++) {
         printf("%d ", values[i]);
     }
     printf("\n");
@@ -69,7 +70,7 @@ void mergesortRange(int values[], int startIndex, int endIndex) {
 // Start of debug print
     printf("Elements of given array(End Result): \n");
     //Loop through the array by incrementing value of i
-    for (int i = startIndex; i <= midPoint; i++) {
+    for (int i = startIndex; i <= endIndex; i++) {
         printf("%d ", values[i]);
     }
     printf("\n");
