@@ -4,12 +4,15 @@
 
 void mergeRanges(int values[], int startIndex, int midPoint,
   int endIndex) {
+    // Initialize values
     int rangeSize = endIndex - startIndex + 1;
     int *destination =(int*)calloc(rangeSize, sizeof(int));
     int firstIndex = startIndex;
     int secondIndex = midPoint+1;
     int copyIndex = 0;
-    printf("Variables in mergeRanges:\n rangeSize %d\n firstIndex %d\n secondIndex %d\n endIndex %d\n", rangeSize, firstIndex, secondIndex, endIndex);
+
+    // Iterate through the two given sections and sort them into the destination array
+    // This assumes both sections are sorted already
     while (firstIndex <= midPoint && secondIndex <= endIndex) {
       if (values[firstIndex] < values[secondIndex]) {
         destination[copyIndex] = values[firstIndex];
@@ -20,11 +23,16 @@ void mergeRanges(int values[], int startIndex, int midPoint,
       }
       ++copyIndex;
     }
+
+    // This only happens if the second section runs out of numbers
+    // Because we then know that the rest of the first section is sorted and goes at the end
     while (firstIndex <= midPoint) {
       destination[copyIndex] = values[firstIndex];
       ++copyIndex;
       ++firstIndex;
     }
+
+    // Same as the while loop above, but if the first section finished before the second
     while (secondIndex <= endIndex) {
       destination[copyIndex] = values[secondIndex];
       ++copyIndex;
@@ -37,51 +45,26 @@ void mergeRanges(int values[], int startIndex, int midPoint,
 }
 
 void mergesortRange(int values[], int startIndex, int endIndex) {
+    // This is so we know the size of the section we are working on 
     int rangeSize = (endIndex - startIndex)+1;
-    printf("Size : %d \n", rangeSize); //Print size to check accuracy
 
+    // This is to stop the recursion when the size of the section becomes one or less (base case) 
     if (rangeSize >= 2) {
+      // Calculate the midpoint (to separate the section into two halves)
       int midPoint = (startIndex + endIndex) / 2;
-      mergesortRange(values, startIndex, midPoint); // < --- Actual code
-
-// Start of debug print
-          
-    printf("Elements of given array(First Half): \n");    
-    //Loop through the array by incrementing value of i     
-    for (int i = startIndex; i <= midPoint; i++) {     
-        printf("%d ", values[i]);	
-    }
-    printf("\n");
-// End of Print debug
-//
-      mergesortRange(values, midPoint+1, endIndex); // <-- Actual Code
-// Start of debug print
-
-    printf("Elements of given array(Second Half): \n");
-    //Loop through the array by incrementing value of i
-    for (int i = midPoint+1; i <= endIndex; i++) {
-        printf("%d ", values[i]);
-    }
-    printf("\n");
-// End of Print debug
-
-      mergeRanges(values, startIndex, midPoint, endIndex); //<--- Actual code
-
-// Start of debug print
-    printf("Elements of given array(End Result): \n");
-    //Loop through the array by incrementing value of i
-    for (int i = startIndex; i <= endIndex; i++) {
-        printf("%d ", values[i]);
-    }
-    printf("\n");
-// End of Print debug
-
+      // Sort the first half (assuming everything works)
+      mergesortRange(values, startIndex, midPoint);
+      // Sort the second half (assuming everything works)
+      mergesortRange(values, midPoint+1, endIndex); 
+      // Combine the two sorted ranges
+      mergeRanges(values, startIndex, midPoint, endIndex);
     }
 }
 
 void mergesort(int size, int values[]){
 
-
+// This is where it starts, setting up our startIndex and endIndex
+// which turns out to be the first value and last value to start
 mergesortRange(values, 0, size-1);
 }
 
