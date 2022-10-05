@@ -7,10 +7,10 @@ void mergeRanges(int values[], int startIndex, int midPoint,
     int rangeSize = endIndex - startIndex + 1;
     int *destination =(int*)calloc(rangeSize, sizeof(int));
     int firstIndex = startIndex;
-    int secondIndex = midPoint;
+    int secondIndex = midPoint+1;
     int copyIndex = 0;
     printf("Variables in mergeRanges:\n rangeSize %d\n firstIndex %d\n secondIndex %d\n endIndex %d\n", rangeSize, firstIndex, secondIndex, endIndex);
-    while (firstIndex < midPoint && secondIndex <= endIndex) {
+    while (firstIndex <= midPoint && secondIndex <= endIndex) {
       if (values[firstIndex] < values[secondIndex]) {
         destination[copyIndex] = values[firstIndex];
         ++firstIndex;
@@ -20,7 +20,7 @@ void mergeRanges(int values[], int startIndex, int midPoint,
       }
       ++copyIndex;
     }
-    while (firstIndex < midPoint) {
+    while (firstIndex <= midPoint) {
       destination[copyIndex] = values[firstIndex];
       ++copyIndex;
       ++firstIndex;
