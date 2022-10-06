@@ -3,8 +3,29 @@
 #include <cstdio>
 #include <cstdlib>
 
+// This assumes that the array of values is already sorted
+int count_unique(int* values, int size){
+
+int uniq = 1, tempIndex = values[0];
+ //Hopefully this for loop counts the unique values
+
+
+  for(int i = 0; i < size; i++){
+	  if(tempIndex != values[i]){
+	    tempIndex = values[i];
+	    uniq++;  
+	  }
+
+
+}
+ return uniq;
+}
+
+
+
 int* array_merge(int num_arrays, int* sizes, int** values) {
   int total_size = 0;
+if(num_arrays == 0) return values[0] ;
 	
   // Find the total size to initiate the final array
   for(int i = 0; i < num_arrays; i++){
@@ -38,7 +59,20 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
 		destination[destIndex] = values[j][i];
 		destIndex++;
 	}
+
+	
   }
+
+
+
+
+
+  mergesort(total_size , destination);
+
+  int count = count_unique(destination, total_size);
+  printf("\nNumber of uniq: %d", count);
+
+
 
 // This is the print statement to see what the values of destination are
   printf("-------------------List of values in destination------------------------ \n");
@@ -48,7 +82,33 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
       }
 
 
+int *endgoal = (int*)calloc(count+1,sizeof(int));
+endgoal[0] = count;
+
+endgoal[1] = destination[0];
+
+int curruniq = destination[0];
+int index = 2;
+
+ //Hopefully this for loop counts the unique values
 
 
-  return sizes;
+  for(int i = 0; i < total_size; i++){
+          if(curruniq != destination[i]){
+            curruniq = destination[i];
+	    endgoal[index] = destination[i];
+            index++;
+          } 
+  }
+
+// This is the print statement to see what the values of destination are
+  printf("-------------------List of values in endgoal------------------------ \n");
+      // Navigate through the destination array and print:
+      for(int i = 0; i < count; i++) {
+              printf("Position %d in end goal: %d\n", i, endgoal[i]);
+      }
+
+
+
+  return endgoal;
 }
