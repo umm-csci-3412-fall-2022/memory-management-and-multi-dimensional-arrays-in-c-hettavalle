@@ -26,8 +26,13 @@ int uniq = 1, curruniq = values[0];
 
 int* array_merge(int num_arrays, int* sizes, int** values) {
   int total_size = 0;
+  int *endgoal;
   // If there are no arrays then we don't run the function
-  if(num_arrays == 0) return values[0] ;
+  if(num_arrays == 0){
+  	endgoal = (int*)calloc(1,sizeof(int));
+	endgoal[0]=0;  
+	return endgoal;//values[0];
+  }
 	
   // Find the total size to initiate the final array
   for(int i = 0; i < num_arrays; i++){
@@ -50,7 +55,7 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
   // Number of unique numbers
   int count = count_unique(destination, total_size);
   // The final goal
-  int *endgoal = (int*)calloc(count+1,sizeof(int));
+  endgoal = (int*)calloc(count+1,sizeof(int));
   // First element in the array is the total unique characters
   endgoal[0] = count;
   // This assumes the first element in destination is already unique
